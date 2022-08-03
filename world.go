@@ -35,8 +35,8 @@ func NewWorld(w, h int, p Player) *World {
 		grid[i] = make([]Entity, w)
 	}
 
-	playerX, playerY := p.GetPosition()
-	grid[playerY][playerX] = p
+	x, y := p.GetPosition()
+	grid[y][x] = p
 
 	return &World{
 		Grid:   grid,
