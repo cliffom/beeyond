@@ -7,6 +7,8 @@ import (
 	"github.com/gdamore/tcell/v2"
 )
 
+// Game represents our main game and handles
+// rendering, updating the world state, inputs, etc
 type Game struct {
 	Screen    tcell.Screen
 	World     *World
@@ -87,6 +89,8 @@ func (g *Game) HandleInput(k tcell.Key) {
 	}
 }
 
+// NewGame initlizes a game given a screen to render on
+// and a world
 func NewGame(s tcell.Screen, w *World) *Game {
 	return &Game{
 		Screen:    s,
