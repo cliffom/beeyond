@@ -1,5 +1,7 @@
 package main
 
+import "github.com/gdamore/tcell/v2"
+
 var beeFrames = []rune{
 	'\u25B2',
 	'\u25B6',
@@ -49,6 +51,10 @@ func (b *Bee) GetPosition() (x, y int) {
 	return b.x, b.y
 }
 
+func (b *Bee) GetColor() tcell.Color {
+	return b.color
+}
+
 func NewBee() *Bee {
 	return &Bee{
 		Position: Position{
@@ -62,6 +68,7 @@ func NewBee() *Bee {
 		Sprite: Sprite{
 			frames: beeFrames,
 			frame:  0,
+			color:  tcell.ColorYellow,
 		},
 	}
 }

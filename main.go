@@ -46,13 +46,13 @@ func main() {
 	go s.ChannelEvents(evt, quit)
 
 	go func(s tcell.Screen, w *World) {
-		style := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorRed)
 		for {
 			s.Clear()
 			for i := range w.Grid {
 				for j, k := range w.Grid[i] {
 					switch ent := k.(type) {
 					case Entity:
+						style := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(ent.GetColor())
 						s.SetContent(j, i, ent.Draw(), nil, style)
 					}
 				}
