@@ -29,6 +29,28 @@ func (w *World) GetCellAt(x, y int) *Entity {
 	return &w.Grid[y][x]
 }
 
+func (w *World) MovePlayer(d int) bool {
+	var vx, vy int
+	switch d {
+	case UP:
+		vx = 0
+		vy = -1
+	case RIGHT:
+		vx = 1
+		vy = 0
+	case DOWN:
+		vx = 0
+		vy = 1
+	case LEFT:
+		vx = -1
+		vy = 0
+	}
+
+	x, y := w.Player.GetPosition()
+	cell := *w.GetCellAt(x+vx, y+vy)
+	return w.Player.UpdatePosition(d, cell)
+}
+
 func NewWorld(w, h int, p Player) *World {
 	grid := make([][]Entity, h)
 	for i := range grid {

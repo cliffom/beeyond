@@ -73,10 +73,6 @@ func (b *Bee) GetColor() tcell.Color {
 	return b.color
 }
 
-func (b *Bee) HandleInput(k tcell.Key) bool {
-	return false
-}
-
 // NewBee returns a new Bee
 func NewBee() *Bee {
 	return &Bee{

@@ -61,19 +61,19 @@ func (g *Game) HandleInput(k tcell.Key) {
 
 	switch k {
 	case tcell.KeyUp:
-		if !move(UP, 0, -1, w) {
+		if !w.MovePlayer(UP) {
 			s.Beep()
 		}
 	case tcell.KeyRight:
-		if !move(RIGHT, 1, 0, w) {
+		if !w.MovePlayer(RIGHT) {
 			s.Beep()
 		}
 	case tcell.KeyDown:
-		if !move(DOWN, 0, 1, w) {
+		if !w.MovePlayer(DOWN) {
 			s.Beep()
 		}
 	case tcell.KeyLeft:
-		if !move(LEFT, -1, 0, w) {
+		if !w.MovePlayer(LEFT) {
 			s.Beep()
 		}
 	case tcell.KeyEscape:
@@ -89,12 +89,4 @@ func NewGame(s tcell.Screen, w *World) *Game {
 		World:     w,
 		Frametime: 24 * time.Millisecond,
 	}
-}
-
-func move(d, vx, vy int, w *World) bool {
-	p := w.Player
-	x, y := p.GetPosition()
-	cell := *w.GetCellAt(x+vx, y+vy)
-	moved := p.UpdatePosition(d, cell)
-	return moved
 }
