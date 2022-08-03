@@ -13,6 +13,8 @@ type Game struct {
 	Frametime time.Duration
 }
 
+// Run is the main gameloop - takes a world grid of entities, handles movement,
+// and renders. Time between loop iterations is determined by Game.Frametime
 func (g *Game) Run() {
 	s := g.Screen
 	w := g.World
@@ -38,6 +40,7 @@ func (g *Game) Run() {
 	}
 }
 
+// HandleEvent is what handles incoming events (key presses, screen resizes, etc)
 func (g *Game) HandleEvent(evt chan tcell.Event, quit chan struct{}) {
 	s := g.Screen
 
@@ -55,6 +58,7 @@ func (g *Game) HandleEvent(evt chan tcell.Event, quit chan struct{}) {
 	}
 }
 
+// HandleInputs is what handles user input events (from keyboard)
 func (g *Game) HandleInput(k tcell.Key) {
 	w := g.World
 	s := g.Screen

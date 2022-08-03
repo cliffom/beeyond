@@ -1,16 +1,13 @@
 package main
 
-import "github.com/gdamore/tcell/v2"
-
 type World struct {
 	Grid   [][]Entity
 	Player Player
 }
 
-func (w *World) HandleInput(k tcell.Key) bool {
-	return false
-}
-
+// PlaceEntity places an entity on the world grid at
+// the entity's current position as long as there isn't
+// an existing entity occupying the grid position
 func (w *World) PlaceEntity(e Entity) bool {
 	x, y := e.GetPosition()
 	if w.Grid[y][x] == nil {
@@ -21,14 +18,19 @@ func (w *World) PlaceEntity(e Entity) bool {
 	return false
 }
 
+// ClearCellAt removes any entity from the cell position (x, y)
 func (w *World) ClearCellAt(x, y int) {
 	w.Grid[y][x] = nil
 }
 
+// GetCellAt returns the entity at the cell position (x, y)
 func (w *World) GetCellAt(x, y int) *Entity {
 	return &w.Grid[y][x]
 }
 
+// MovePlayer will attempt to update the position of a player
+// based on the incoming direction. Passes the contents of the cell
+// in the would-be new position as the player's awareness
 func (w *World) MovePlayer(d int) bool {
 	var vx, vy int
 	switch d {
@@ -57,6 +59,7 @@ func NewWorld(w, h int, p Player) *World {
 		grid[i] = make([]Entity, w)
 	}
 
+	// Place our player in the world
 	x, y := p.GetPosition()
 	grid[y][x] = p
 
