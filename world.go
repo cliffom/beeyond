@@ -1,5 +1,7 @@
 package main
 
+// World represents our world as a 2-dimensional grid
+// and a user-controlled player
 type World struct {
 	Grid   [][]Entity
 	Player Player
@@ -53,6 +55,9 @@ func (w *World) MovePlayer(d int) bool {
 	return w.Player.UpdatePosition(d, cell)
 }
 
+// NewWorld initializes and returns a World. Responsible for
+// drawing the world border and placing the player in their
+// starting position
 func NewWorld(w, h int, p Player) *World {
 	grid := make([][]Entity, h)
 	for i := range grid {
