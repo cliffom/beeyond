@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"os"
-	"time"
 
 	"github.com/gdamore/tcell/v2"
 )
@@ -23,9 +22,9 @@ func main() {
 
 	world := NewWorld(s.Size())
 	bee := NewBee()
-
 	world.PlaceEntity(bee)
 
+	// Initialize the borders of our world
 	for i := range world.Grid {
 		if i == 0 || i == len(world.Grid)-1 {
 			for k := range world.Grid[i] {
@@ -40,27 +39,14 @@ func main() {
 		}
 	}
 
+	game := NewGame(s, world)
+
 	// listen for events
 	evt := make(chan tcell.Event)
 	quit := make(chan struct{})
 	go s.ChannelEvents(evt, quit)
 
-	go func(s tcell.Screen, w *World) {
-		for {
-			s.Clear()
-			for i := range w.Grid {
-				for j, k := range w.Grid[i] {
-					switch ent := k.(type) {
-					case Entity:
-						style := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(ent.GetColor())
-						s.SetContent(j, i, ent.Draw(), nil, style)
-					}
-				}
-			}
-			s.Show()
-			time.Sleep(24 * time.Millisecond)
-		}
-	}(s, world)
+	go game.Run()
 
 	for {
 		eventHandler(evt, quit, s, world, bee)
