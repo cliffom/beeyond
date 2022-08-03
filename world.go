@@ -1,7 +1,14 @@
 package main
 
+import "github.com/gdamore/tcell/v2"
+
 type World struct {
-	Grid [][]Entity
+	Grid   [][]Entity
+	Player Player
+}
+
+func (w *World) HandleInput(k tcell.Key) bool {
+	return false
 }
 
 func (w *World) PlaceEntity(e Entity) bool {
@@ -22,13 +29,17 @@ func (w *World) GetCellAt(x, y int) *Entity {
 	return &w.Grid[y][x]
 }
 
-func NewWorld(w, h int) *World {
+func NewWorld(w, h int, p Player) *World {
 	grid := make([][]Entity, h)
 	for i := range grid {
 		grid[i] = make([]Entity, w)
 	}
 
+	playerX, playerY := p.GetPosition()
+	grid[playerY][playerX] = p
+
 	return &World{
-		Grid: grid,
+		Grid:   grid,
+		Player: p,
 	}
 }

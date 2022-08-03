@@ -15,8 +15,14 @@ func (b *Border) Draw() rune {
 	return b.frames[b.frame]
 }
 
+func (b *Border) Move() {}
+
 func (b *Border) GetPosition() (x, y int) {
 	return b.x, b.y
+}
+
+func (b *Border) HasVelocity() bool {
+	return false
 }
 
 func (b *Border) GetColor() tcell.Color {

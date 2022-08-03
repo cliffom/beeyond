@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/gdamore/tcell/v2"
 )
@@ -20,9 +19,9 @@ func main() {
 		log.Fatalf("could not init screen: %v", err)
 	}
 
-	world := NewWorld(s.Size())
 	bee := NewBee()
-	world.PlaceEntity(bee)
+	w, h := s.Size()
+	world := NewWorld(w, h, bee)
 
 	// Initialize the borders of our world
 	for i := range world.Grid {
@@ -49,7 +48,7 @@ func main() {
 	go game.Run()
 
 	for {
-		eventHandler(evt, quit, s, world, bee)
+		game.HandleEvent(evt, quit)
 	}
 }
 
@@ -69,54 +68,4 @@ func getScreen() (tcell.Screen, error) {
 	s.SetStyle(defStyle)
 
 	return s, nil
-}
-
-func eventHandler(evt chan tcell.Event, quit chan struct{}, s tcell.Screen, w *World, b *Bee) {
-	select {
-	case ev := <-evt:
-		switch event := ev.(type) {
-		case *tcell.EventResize:
-			s.Sync()
-		case *tcell.EventKey:
-			handleKeyPress(event.Key(), s, w, b)
-		}
-	case <-quit:
-		s.Fini()
-		os.Exit(0)
-	}
-}
-
-// handleKeyPress handles key press events from the user
-func handleKeyPress(k tcell.Key, s tcell.Screen, w *World, b *Bee) {
-	switch k {
-	case tcell.KeyUp:
-		if !move(UP, 0, -1, b, w) {
-			s.Beep()
-		}
-	case tcell.KeyRight:
-		if !move(RIGHT, 1, 0, b, w) {
-			s.Beep()
-		}
-	case tcell.KeyDown:
-		if !move(DOWN, 0, 1, b, w) {
-			s.Beep()
-		}
-	case tcell.KeyLeft:
-		if !move(LEFT, -1, 0, b, w) {
-			s.Beep()
-		}
-	case tcell.KeyEscape:
-		s.Clear()
-		s.Fini()
-		os.Exit(0)
-	}
-}
-
-func move(d, vx, vy int, b *Bee, w *World) bool {
-	x, y := b.GetPosition()
-	cell := *w.GetCellAt(x+vx, y+vy)
-	w.ClearCellAt(b.GetPosition())
-	moved := b.Move(d, cell)
-	w.PlaceEntity(b)
-	return moved
 }
