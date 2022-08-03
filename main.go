@@ -23,21 +23,6 @@ func main() {
 	w, h := s.Size()
 	world := NewWorld(w, h, bee)
 
-	// Initialize the borders of our world
-	for i := range world.Grid {
-		if i == 0 || i == len(world.Grid)-1 {
-			for k := range world.Grid[i] {
-				border := NewBorder(k, i)
-				world.PlaceEntity(border)
-			}
-		} else {
-			leftBorder := NewBorder(0, i)
-			rightBorder := NewBorder(len(world.Grid[i])-1, i)
-			world.PlaceEntity(leftBorder)
-			world.PlaceEntity(rightBorder)
-		}
-	}
-
 	game := NewGame(s, world)
 
 	// listen for events

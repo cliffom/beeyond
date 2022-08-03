@@ -38,8 +38,25 @@ func NewWorld(w, h int, p Player) *World {
 	x, y := p.GetPosition()
 	grid[y][x] = p
 
-	return &World{
+	world := &World{
 		Grid:   grid,
 		Player: p,
 	}
+
+	// Initialize the borders of our world
+	for i := range world.Grid {
+		if i == 0 || i == len(world.Grid)-1 {
+			for k := range world.Grid[i] {
+				border := NewBorder(k, i)
+				world.PlaceEntity(border)
+			}
+		} else {
+			leftBorder := NewBorder(0, i)
+			rightBorder := NewBorder(len(world.Grid[i])-1, i)
+			world.PlaceEntity(leftBorder)
+			world.PlaceEntity(rightBorder)
+		}
+	}
+
+	return world
 }
