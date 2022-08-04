@@ -85,9 +85,9 @@ func (e *Enemy) GetColor() tcell.Color {
 }
 
 // NewEnemy returns a new Bee
-func NewEnemy(x, y, delay int) *Enemy {
+func NewEnemy(x, y int) *Enemy {
 	return &Enemy{
-		delay: delay,
+		delay: rand.Intn(10) + 10,
 		Position: Position{
 			x: x,
 			y: y,

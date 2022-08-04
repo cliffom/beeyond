@@ -1,5 +1,7 @@
 package main
 
+import "math/rand"
+
 // World represents our world as a 2-dimensional grid
 // and a user-controlled player
 type World struct {
@@ -73,9 +75,12 @@ func NewWorld(w, h int, p Player) *World {
 		Player: p,
 	}
 
-	e := NewEnemy(10, 10, 2)
-	ex, ey := e.GetPosition()
-	grid[ey][ex] = e
+	for i := 0; i < 5; i++ {
+		ex := rand.Intn(w-1) + 1
+		ey := rand.Intn(h-1) + 1
+		e := NewEnemy(ex, ey)
+		grid[ey][ex] = e
+	}
 
 	// Initialize the borders of our world
 	for i := range world.Grid {

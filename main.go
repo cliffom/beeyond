@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"math/rand"
+	"time"
 
 	"github.com/gdamore/tcell/v2"
 )
@@ -14,6 +16,7 @@ const (
 )
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 	s, err := getScreen()
 	if err != nil {
 		log.Fatalf("could not init screen: %v", err)
