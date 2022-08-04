@@ -20,8 +20,8 @@ type Game struct {
 func (g *Game) Run() {
 	s := g.Screen
 	w := g.World
+
 	for {
-		s.Clear()
 		for i := range w.Grid {
 			for j, k := range w.Grid[i] {
 				switch ent := k.(type) {
@@ -34,6 +34,9 @@ func (g *Game) Run() {
 					}
 
 					s.SetContent(j, i, ent.Draw(), nil, style)
+				default:
+					style := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(0)
+					s.SetContent(j, i, '\u0020', nil, style)
 				}
 			}
 		}
@@ -95,6 +98,6 @@ func NewGame(s tcell.Screen, w *World) *Game {
 	return &Game{
 		Screen:    s,
 		World:     w,
-		Frametime: 24 * time.Millisecond,
+		Frametime: 33 * time.Millisecond,
 	}
 }
