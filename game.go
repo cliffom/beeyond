@@ -28,9 +28,15 @@ func (g *Game) Run() {
 				case Entity:
 					style := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(ent.GetColor())
 					if ent.HasVelocity() {
-						w.ClearCellAt(ent.GetPosition())
-						ent.Move()
-						w.PlaceEntity(ent)
+						x, y := ent.GetPosition()
+						vx, vy := ent.GetVelocity()
+
+						if *w.GetCellAt(x+vx, y+vy) == nil {
+							w.ClearCellAt(x, y)
+							ent.Move()
+							w.PlaceEntity(ent)
+						}
+
 					}
 
 					s.SetContent(j, i, ent.Draw(), nil, style)

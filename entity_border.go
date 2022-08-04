@@ -25,6 +25,11 @@ func (b *Border) HasVelocity() bool {
 	return false
 }
 
+// GetVelocity returns the current velocity (vx, vy)
+func (b *Border) GetVelocity() (vx, vy int) {
+	return 0, 0
+}
+
 func (b *Border) GetColor() tcell.Color {
 	return b.color
 }

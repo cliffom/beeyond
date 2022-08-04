@@ -7,5 +7,6 @@ type Entity interface {
 	Move()
 	GetPosition() (x, y int)
 	HasVelocity() bool
+	GetVelocity() (vx, vy int)
 	GetColor() tcell.Color
 }
