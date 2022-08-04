@@ -69,7 +69,13 @@ func (e *Enemy) HasVelocity() bool {
 	case 2:
 		e.vy = 1
 	}
+
 	return true
+}
+
+// GetVelocity returns the current velocity (vx, vy)
+func (e *Enemy) GetVelocity() (vx, vy int) {
+	return e.vx, e.vy
 }
 
 // GetColor returns the current color of a Bee

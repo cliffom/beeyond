@@ -62,6 +62,11 @@ func (b *Bee) HasVelocity() bool {
 	return b.vx != 0 || b.vy != 0
 }
 
+// GetVelocity returns the current velocity (vx, vy)
+func (b *Bee) GetVelocity() (vx, vy int) {
+	return b.vx, b.vy
+}
+
 // SetVelocity sets a Bee's velocity to the incoming (vx, vy)
 func (b *Bee) SetVelocity(vx, vy int) {
 	b.vx = vx
