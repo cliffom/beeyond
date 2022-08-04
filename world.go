@@ -73,6 +73,10 @@ func NewWorld(w, h int, p Player) *World {
 		Player: p,
 	}
 
+	e := NewEnemy()
+	ex, ey := e.GetPosition()
+	grid[ey][ex] = e
+
 	// Initialize the borders of our world
 	for i := range world.Grid {
 		if i == 0 || i == len(world.Grid)-1 {
