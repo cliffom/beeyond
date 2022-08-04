@@ -73,7 +73,7 @@ func NewWorld(w, h int, p Player) *World {
 		Player: p,
 	}
 
-	e := NewEnemy()
+	e := NewEnemy(10, 10, 2)
 	ex, ey := e.GetPosition()
 	grid[ey][ex] = e
 

@@ -17,7 +17,8 @@ type Enemy struct {
 	Position
 	Velocity
 	Sprite
-	tick int
+	tick  int
+	delay int
 }
 
 // Draw returns the rune that represents the current state of our Bee
@@ -46,7 +47,7 @@ func (e *Enemy) GetPosition() (x, y int) {
 }
 
 func (e *Enemy) HasVelocity() bool {
-	if e.tick < 25 {
+	if e.tick < e.delay {
 		e.tick++
 		return false
 	}
@@ -84,11 +85,12 @@ func (e *Enemy) GetColor() tcell.Color {
 }
 
 // NewEnemy returns a new Bee
-func NewEnemy() *Enemy {
+func NewEnemy(x, y, delay int) *Enemy {
 	return &Enemy{
+		delay: delay,
 		Position: Position{
-			x: 10,
-			y: 10,
+			x: x,
+			y: y,
 		},
 		Velocity: Velocity{
 			vx: 0,
