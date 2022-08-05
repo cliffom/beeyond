@@ -15,11 +15,6 @@ type Bee struct {
 	Sprite
 }
 
-// Draw returns the rune that represents the current state of our Bee
-func (b *Bee) Draw() rune {
-	return b.frames[b.frame]
-}
-
 // Move checks for an entity in what would be our Bee's occupying
 // cell post-movement. If the cell-to-be-occupied has no occupying
 // entity, update the Bee's position based on movement vectors.
@@ -28,11 +23,6 @@ func (b *Bee) Move() {
 	b.y += b.vy
 	b.vx = 0
 	b.vy = 0
-}
-
-// GetPosition returns the current (x, y) coordinates of a Bee
-func (b *Bee) GetPosition() (x, y int) {
-	return b.x, b.y
 }
 
 // UpdatePosition updates a Bee's velocity (vx, vy) and position (x, y)
@@ -56,26 +46,6 @@ func (b *Bee) UpdatePosition(d int, e Entity) bool {
 	}
 
 	return true
-}
-
-func (b *Bee) HasVelocity() bool {
-	return b.vx != 0 || b.vy != 0
-}
-
-// GetVelocity returns the current velocity (vx, vy)
-func (b *Bee) GetVelocity() (vx, vy int) {
-	return b.vx, b.vy
-}
-
-// SetVelocity sets a Bee's velocity to the incoming (vx, vy)
-func (b *Bee) SetVelocity(vx, vy int) {
-	b.vx = vx
-	b.vy = vy
-}
-
-// GetColor returns the current color of a Bee
-func (b *Bee) GetColor() tcell.Color {
-	return b.color
 }
 
 // NewBee returns a new Bee
