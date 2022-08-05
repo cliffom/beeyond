@@ -48,7 +48,7 @@ func (e *Enemy) HasVelocity() bool {
 func NewEnemy(x, y int) *Enemy {
 	return &Enemy{
 		Delay: Delay{
-			delay: rand.Intn(10) + 10,
+			delay: rand.Intn(11) + 15,
 		},
 		Position: Position{
 			x: x,
@@ -74,7 +74,7 @@ func getEnemyFrames() []rune {
 		'\u25F7',
 	}
 
-	numFramesPerState := rand.Intn(8) + 2
+	numFramesPerState := rand.Intn(7) + 4
 	totalFrames := len(enemyFrames) * numFramesPerState
 
 	runes := make([]rune, totalFrames)

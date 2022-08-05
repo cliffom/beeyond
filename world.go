@@ -75,13 +75,6 @@ func NewWorld(w, h int, p Player) *World {
 		Player: p,
 	}
 
-	for i := 0; i < 5; i++ {
-		ex := rand.Intn(w-3) + 3
-		ey := rand.Intn(h-3) + 3
-		e := NewEnemy(ex, ey)
-		grid[ey][ex] = e
-	}
-
 	// Initialize the borders of our world
 	for i := range world.Grid {
 		if i == 0 || i == len(world.Grid)-1 {
@@ -94,6 +87,21 @@ func NewWorld(w, h int, p Player) *World {
 			rightBorder := NewBorder(len(world.Grid[i])-1, i)
 			world.PlaceEntity(leftBorder)
 			world.PlaceEntity(rightBorder)
+		}
+	}
+
+	enemies := 0
+	maxEnemies := 5
+	for {
+		ex := rand.Intn(w)
+		ey := rand.Intn(h)
+		if *world.GetCellAt(ex, ey) == nil {
+			e := NewEnemy(ex, ey)
+			world.PlaceEntity(e)
+			enemies++
+		}
+		if enemies == maxEnemies {
+			break
 		}
 	}
 
