@@ -14,19 +14,22 @@ type Enemy struct {
 	Delay
 }
 
-// Draw returns the rune that represents the current state of our Bee
+// Draw returns the current animation frame but also increments
+// the frame for the next draw call
 func (e *Enemy) Draw() rune {
+	frame := e.frames[e.frame]
+
+	e.frame++
 	if e.frame > len(e.frames)-1 {
 		e.frame = 0
 	}
-	frame := e.frames[e.frame]
-	e.frame++
+
 	return frame
 }
 
-// Move checks for an entity in what would be our Bee's occupying
+// Move checks for an entity in what would be our Enemy's occupying
 // cell post-movement. If the cell-to-be-occupied has no occupying
-// entity, update the Bee's position based on movement vectors.
+// entity, update the Enemy's position based on movement vectors.
 func (e *Enemy) Move() {
 	e.SetPosition(e.x+e.vx, e.y+e.vy)
 }

@@ -8,7 +8,7 @@ type Sprite struct {
 	frame  int
 }
 
-// Draw returns the rune that represents the current state of our Bee
+// Draw returns the rune that represents the current state of our Sprite
 func (s *Sprite) Draw() rune {
 	return s.frames[s.frame]
 }
