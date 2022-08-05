@@ -41,11 +41,6 @@ func (e *Enemy) Move() {
 	e.vy = 0
 }
 
-// GetPosition returns the current (x, y) coordinates of a Bee
-func (e *Enemy) GetPosition() (x, y int) {
-	return e.x, e.y
-}
-
 func (e *Enemy) HasVelocity() bool {
 	if e.tick < e.delay {
 		e.tick++
@@ -72,16 +67,6 @@ func (e *Enemy) HasVelocity() bool {
 	}
 
 	return true
-}
-
-// GetVelocity returns the current velocity (vx, vy)
-func (e *Enemy) GetVelocity() (vx, vy int) {
-	return e.vx, e.vy
-}
-
-// GetColor returns the current color of a Bee
-func (e *Enemy) GetColor() tcell.Color {
-	return e.color
 }
 
 // NewEnemy returns a new Bee
