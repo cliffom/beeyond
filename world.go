@@ -90,7 +90,7 @@ func NewWorld(w, h int, p Player) *World {
 		}
 	}
 
-	enemies := 0
+	// Put some enemies into our world
 	maxEnemies := 5
 	for {
 		ex := rand.Intn(w)
@@ -98,9 +98,9 @@ func NewWorld(w, h int, p Player) *World {
 		if *world.GetCellAt(ex, ey) == nil {
 			e := NewEnemy(ex, ey)
 			world.PlaceEntity(e)
-			enemies++
+			maxEnemies--
 		}
-		if enemies == maxEnemies {
+		if maxEnemies == 0 {
 			break
 		}
 	}
