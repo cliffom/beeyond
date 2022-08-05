@@ -2,15 +2,12 @@ package main
 
 import "github.com/gdamore/tcell/v2"
 
-var borderFrames = []rune{
-	'\u2588',
-}
-
 type Border struct {
 	Position
 	Sprite
 }
 
+// Move for Border is a noop as a border cannot move
 func (b *Border) Move() {}
 
 // HasVelocity returns false since a static border has no Velocity
@@ -25,10 +22,6 @@ func (b *Border) GetVelocity() (vx, vy int) {
 	return 0, 0
 }
 
-func (b *Border) GetColor() tcell.Color {
-	return b.color
-}
-
 func NewBorder(x, y int) *Border {
 	return &Border{
 		Position: Position{
@@ -37,7 +30,7 @@ func NewBorder(x, y int) *Border {
 		},
 		Sprite: Sprite{
 			color:  tcell.ColorLightGrey,
-			frames: borderFrames,
+			frames: []rune{'\u2588'},
 			frame:  0,
 		},
 	}
