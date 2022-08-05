@@ -11,16 +11,11 @@ type Border struct {
 	Sprite
 }
 
-func (b *Border) Draw() rune {
-	return b.frames[b.frame]
-}
-
 func (b *Border) Move() {}
 
-func (b *Border) GetPosition() (x, y int) {
-	return b.x, b.y
-}
-
+// HasVelocity returns false since a static border has no Velocity
+// We don't use the Velocity component for this entity but including
+// function simplifies drawing a border
 func (b *Border) HasVelocity() bool {
 	return false
 }
