@@ -2,6 +2,7 @@ package main
 
 import (
 	"math/rand"
+	"time"
 
 	"github.com/gdamore/tcell/v2"
 )
@@ -36,7 +37,7 @@ func (e *Enemy) Move() {
 // HasVelocity overrides Velocity.HasVelocity to randomize
 // movement direction and speed (time between movement intervals)
 func (e *Enemy) HasVelocity() bool {
-	if !e.NextTick() {
+	if !e.Tick() {
 		return false
 	}
 
@@ -46,9 +47,10 @@ func (e *Enemy) HasVelocity() bool {
 
 // NewEnemy returns a new Enemy
 func NewEnemy(x, y int) *Enemy {
+	delay := time.Duration(rand.Intn(501)+250) * time.Millisecond
 	return &Enemy{
 		Delay: Delay{
-			delay: rand.Intn(11) + 15,
+			ticker: *time.NewTicker(delay),
 		},
 		Position: Position{
 			x: x,

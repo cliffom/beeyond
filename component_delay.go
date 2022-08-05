@@ -1,17 +1,19 @@
 package main
 
+import "time"
+
 type Delay struct {
-	tick  int
-	delay int
+	ticker time.Ticker
 }
 
-// NextTick returns true and resets Delay.Tick if Delay.tick == Delay.Delay
-// otherwise it increments tick
-func (d *Delay) NextTick() bool {
-	if d.tick < d.delay {
-		d.tick++
-		return false
+// Tick determines whether or not an update should be allowed
+func (d *Delay) Tick() bool {
+	for {
+		select {
+		case <-d.ticker.C:
+			return true
+		default:
+			return false
+		}
 	}
-	d.tick = 0
-	return true
 }
