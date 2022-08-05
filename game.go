@@ -21,31 +21,44 @@ func (g *Game) Run() {
 	s := g.Screen
 	w := g.World
 
+	// main loop
 	for {
+		// iterate through our Grid Y-axis
 		for i := range w.Grid {
+			// iterate through our cells w.Grid[j][i]
 			for j, k := range w.Grid[i] {
 				switch ent := k.(type) {
 				case Entity:
 					style := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(ent.GetColor())
+
+					// If the entity in the current cell has a velocity
+					// then attempt movement
 					if ent.HasVelocity() {
 						x, y := ent.GetPosition()
 						vx, vy := ent.GetVelocity()
 
+						// Check the contents in the cell our entity
+						// is attempting to occupy. Only allow movement
+						// if the cell is unoccupied
 						if *w.GetCellAt(x+vx, y+vy) == nil {
 							w.ClearCellAt(x, y)
 							ent.Move()
 							w.PlaceEntity(ent)
 						}
-
 					}
 
+					// set the content of the screen at the current cell
+					// to the entities current animation frame
 					s.SetContent(j, i, ent.Draw(), nil, style)
 				default:
+					// handle empty cells
 					style := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(0)
 					s.SetContent(j, i, '\u0020', nil, style)
 				}
 			}
 		}
+
+		// render screen based on updates and delay before next iteration
 		s.Show()
 		time.Sleep(g.Frametime)
 	}
