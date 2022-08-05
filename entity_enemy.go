@@ -66,6 +66,8 @@ func NewEnemy(x, y int) *Enemy {
 	}
 }
 
+// getEnemyFrames is a helper function that adds frames of each animation
+// in order to slow down the perceived time between animation updates
 func getEnemyFrames() []rune {
 	enemyFrames := []rune{
 		'\u25F4',
