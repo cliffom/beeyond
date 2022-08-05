@@ -76,8 +76,8 @@ func NewWorld(w, h int, p Player) *World {
 	}
 
 	for i := 0; i < 5; i++ {
-		ex := rand.Intn(w-2) + 2
-		ey := rand.Intn(h-2) + 2
+		ex := rand.Intn(w-3) + 3
+		ey := rand.Intn(h-3) + 3
 		e := NewEnemy(ex, ey)
 		grid[ey][ex] = e
 	}

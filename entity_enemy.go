@@ -6,13 +6,6 @@ import (
 	"github.com/gdamore/tcell/v2"
 )
 
-var enemyFrames = []rune{
-	'\u25F4',
-	'\u25F5',
-	'\u25F6',
-	'\u25F7',
-}
-
 type Enemy struct {
 	Position
 	Velocity
@@ -66,9 +59,31 @@ func NewEnemy(x, y int) *Enemy {
 			vy: 0,
 		},
 		Sprite: Sprite{
-			frames: enemyFrames,
+			frames: getEnemyFrames(),
 			frame:  0,
 			color:  tcell.ColorRed,
 		},
 	}
+}
+
+func getEnemyFrames() []rune {
+	enemyFrames := []rune{
+		'\u25F4',
+		'\u25F5',
+		'\u25F6',
+		'\u25F7',
+	}
+
+	numFramesPerState := rand.Intn(8) + 2
+	totalFrames := len(enemyFrames) * numFramesPerState
+
+	runes := make([]rune, totalFrames)
+
+	for i, v := range enemyFrames {
+		for j := numFramesPerState * i; j < numFramesPerState+(i*numFramesPerState); j++ {
+			runes[j] = v
+		}
+	}
+
+	return runes
 }
