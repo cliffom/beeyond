@@ -44,7 +44,7 @@ func (e *Enemy) HasVelocity() bool {
 	return true
 }
 
-// NewEnemy returns a new Bee
+// NewEnemy returns a new Enemy
 func NewEnemy(x, y int) *Enemy {
 	return &Enemy{
 		Delay: Delay{
