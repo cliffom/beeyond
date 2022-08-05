@@ -17,8 +17,7 @@ type Enemy struct {
 	Position
 	Velocity
 	Sprite
-	tick  int
-	delay int
+	Delay
 }
 
 // Draw returns the rune that represents the current state of our Bee
@@ -41,38 +40,23 @@ func (e *Enemy) Move() {
 	e.vy = 0
 }
 
+// HasVelocity overrides Velocity.HasVelocity to randomize
+// movement direction and speed (time between movement intervals)
 func (e *Enemy) HasVelocity() bool {
-	if e.tick < e.delay {
-		e.tick++
+	if !e.NextTick() {
 		return false
 	}
-	e.tick = 0
-	x := rand.Intn(3)
-	y := rand.Intn(3)
-	switch x {
-	case 0:
-		e.vx = 0
-	case 1:
-		e.vx = -1
-	case 2:
-		e.vx = 1
-	}
-	switch y {
-	case 0:
-		e.vy = 0
-	case 1:
-		e.vy = -1
-	case 2:
-		e.vy = 1
-	}
 
+	e.SetRandomVelocity()
 	return true
 }
 
 // NewEnemy returns a new Bee
 func NewEnemy(x, y int) *Enemy {
 	return &Enemy{
-		delay: rand.Intn(10) + 10,
+		Delay: Delay{
+			delay: rand.Intn(10) + 10,
+		},
 		Position: Position{
 			x: x,
 			y: y,
