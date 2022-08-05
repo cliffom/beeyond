@@ -10,9 +10,9 @@ import (
 // Game represents our main game and handles
 // rendering, updating the world state, inputs, etc
 type Game struct {
-	Screen    tcell.Screen
-	World     *World
-	Frametime time.Duration
+	Screen  tcell.Screen
+	World   *World
+	Options *GameOptions
 }
 
 // Run is the main gameloop - takes a world grid of entities, handles movement,
@@ -60,7 +60,7 @@ func (g *Game) Run() {
 
 		// render screen based on updates and delay before next iteration
 		s.Show()
-		time.Sleep(g.Frametime)
+		time.Sleep(g.Options.Frametime())
 	}
 }
 
@@ -113,10 +113,10 @@ func (g *Game) HandleInput(k tcell.Key) {
 
 // NewGame initlizes a game given a screen to render on
 // and a world
-func NewGame(s tcell.Screen, w *World) *Game {
+func NewGame(s tcell.Screen, w *World, o *GameOptions) *Game {
 	return &Game{
-		Screen:    s,
-		World:     w,
-		Frametime: 33 * time.Millisecond,
+		Screen:  s,
+		World:   w,
+		Options: o,
 	}
 }

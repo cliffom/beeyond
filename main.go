@@ -26,7 +26,10 @@ func main() {
 	bee := NewBee(w/2, h/2)
 	world := NewWorld(w, h, bee)
 
-	game := NewGame(s, world)
+	options := &GameOptions{
+		Framerate: 30,
+	}
+	game := NewGame(s, world, options)
 
 	// listen for events
 	evt := make(chan tcell.Event)
