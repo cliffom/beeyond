@@ -49,15 +49,11 @@ func (b *Bee) UpdatePosition(d int, e Entity) bool {
 }
 
 // NewBee returns a new Bee
-func NewBee() *Bee {
+func NewBee(x, y int) *Bee {
 	return &Bee{
 		Position: Position{
-			x: 5,
-			y: 5,
-		},
-		Velocity: Velocity{
-			vx: 0,
-			vy: 0,
+			x: x,
+			y: y,
 		},
 		Sprite: Sprite{
 			frames: beeFrames,

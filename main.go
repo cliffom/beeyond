@@ -22,8 +22,8 @@ func main() {
 		log.Fatalf("could not init screen: %v", err)
 	}
 
-	bee := NewBee()
 	w, h := s.Size()
+	bee := NewBee(w/2, h/2)
 	world := NewWorld(w, h, bee)
 
 	game := NewGame(s, world)
