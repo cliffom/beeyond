@@ -28,10 +28,7 @@ func (e *Enemy) Draw() rune {
 // cell post-movement. If the cell-to-be-occupied has no occupying
 // entity, update the Bee's position based on movement vectors.
 func (e *Enemy) Move() {
-	e.x += e.vx
-	e.y += e.vy
-	e.vx = 0
-	e.vy = 0
+	e.SetPosition(e.x+e.vx, e.y+e.vy)
 }
 
 // HasVelocity overrides Velocity.HasVelocity to randomize
