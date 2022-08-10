@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"os"
@@ -53,7 +54,7 @@ func main() {
 // getOptions draws a tcell.View to get game options
 func getOptions(options *GameOptions) (quit bool) {
 	app := tview.NewApplication()
-	form := tview.NewForm().
+	optionsForm := tview.NewForm().
 		AddDropDown("Framerate", []string{"1", "15", "30", "60"}, 2, func(option string, optionIndex int) {
 			fps, _ := strconv.ParseFloat(option, 32)
 			options.Framerate = float32(fps)
@@ -69,8 +70,21 @@ func getOptions(options *GameOptions) (quit bool) {
 			app.Stop()
 			quit = true
 		})
-	form.SetBorder(true).SetTitle(" beeyond - Game Options ").SetTitleAlign(tview.AlignLeft)
-	if err := app.SetRoot(form, true).SetFocus(form).Run(); err != nil {
+	optionsForm.SetBorder(true).
+		SetTitle(" Game Options ").
+		SetTitleAlign(tview.AlignCenter)
+
+	descBox := tview.NewTextView()
+	beeyondText, _ := os.ReadFile("welcome.txt")
+	fmt.Fprintln(descBox, string(beeyondText))
+	descBox.SetBorder(true)
+	descBox.SetTitle(" beeyond ")
+
+	flex := tview.NewFlex().
+		AddItem(descBox, 0, 1, false).
+		AddItem(tview.NewBox(), 1, 1, false).
+		AddItem(optionsForm, 32, 1, true)
+	if err := app.SetRoot(flex, true).SetFocus(flex).Run(); err != nil {
 		panic(err)
 	}
 
