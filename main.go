@@ -21,7 +21,9 @@ const (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	framerate, enemies, exit := getOptions()
+	// Initialize a new tview form to get user options
+	options := &GameOptions{}
+	exit := getOptions(options)
 	if exit {
 		os.Exit(0)
 	}
@@ -33,11 +35,7 @@ func main() {
 
 	w, h := s.Size()
 	bee := NewBee(w/2, h/2)
-	world := NewWorld(w, h, bee, enemies)
-
-	options := &GameOptions{
-		Framerate: framerate,
-	}
+	world := NewWorld(w, h, bee, options.Enemies)
 	game := NewGame(s, world, options)
 
 	// listen for events
@@ -52,16 +50,17 @@ func main() {
 	}
 }
 
-func getOptions() (framerate float32, enemies int, quit bool) {
+// getOptions draws a tcell.View to get game options
+func getOptions(options *GameOptions) (quit bool) {
 	app := tview.NewApplication()
 	form := tview.NewForm().
 		AddDropDown("Framerate", []string{"1", "15", "30", "60"}, 2, func(option string, optionIndex int) {
 			fps, _ := strconv.ParseFloat(option, 32)
-			framerate = float32(fps)
+			options.Framerate = float32(fps)
 		}).
 		AddDropDown("Enemies", []string{"1", "5", "10", "25"}, 1, func(option string, optionIndex int) {
 			e, _ := strconv.Atoi(option)
-			enemies = e
+			options.Enemies = e
 		}).
 		AddButton("Start", func() {
 			app.Stop()
@@ -75,9 +74,10 @@ func getOptions() (framerate float32, enemies int, quit bool) {
 		panic(err)
 	}
 
-	return framerate, enemies, quit
+	return quit
 }
 
+// getScreen initializes and returns a new tcell.Screen
 func getScreen() (tcell.Screen, error) {
 	// Initialize a new screen
 	s, err := tcell.NewScreen()

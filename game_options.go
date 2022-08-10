@@ -4,6 +4,7 @@ import "time"
 
 type GameOptions struct {
 	Framerate float32
+	Enemies   int
 }
 
 // Frametime returns a time.Duration based on the given framerate
