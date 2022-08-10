@@ -75,7 +75,7 @@ func getOptions(options *GameOptions) (quit bool) {
 		SetTitleAlign(tview.AlignCenter)
 
 	descBox := tview.NewTextView()
-	beeyondText, _ := os.ReadFile("welcome.txt")
+	beeyondText, _ := os.ReadFile("assets/text/welcome.txt")
 	fmt.Fprintln(descBox, string(beeyondText))
 	descBox.SetBorder(true)
 	descBox.SetTitle(" beeyond ")
