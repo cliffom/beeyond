@@ -34,10 +34,7 @@ func main() {
 		log.Fatalf("could not init screen: %v", err)
 	}
 
-	w, h := s.Size()
-	bee := NewBee(w/2, h/2)
-	world := NewWorld(w, h, bee, options.Enemies)
-	game := NewGame(s, world, options)
+	game := NewGame(s, options)
 
 	// listen for events
 	evt := make(chan tcell.Event)

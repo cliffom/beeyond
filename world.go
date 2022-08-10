@@ -61,13 +61,14 @@ func (w *World) MovePlayer(d int) bool {
 // NewWorld initializes and returns a World. Responsible for
 // drawing the world border and placing the player in their
 // starting position
-func NewWorld(w, h int, p Player, numEnemies int) *World {
+func NewWorld(w, h int, numEnemies int) *World {
 	grid := make([][]Entity, h)
 	for i := range grid {
 		grid[i] = make([]Entity, w)
 	}
 
 	// Place our player in the world
+	p := NewBee(w/2, h/2)
 	x, y := p.GetPosition()
 	grid[y][x] = p
 
