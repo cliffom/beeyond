@@ -1,20 +1,18 @@
 Welcome to beeyond!
 
-beeyond is a classic adventure game for your terminal
+beeyond is a classic adventure game for your
+terminal
 
-The game engine is written in Golang and was started as a personal project
-by Michael Clifford (github.com/cliffom) after discovering the tview and
-tcell projects.
+The game engine is written in Golang and was
+started as a personal project by Michael
+Clifford (github.com/cliffom) after
+discovering the tview and tcell projects.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ultrices tincidunt arcu non
-sodales neque sodales ut etiam sit. A condimentum vitae sapien pellentesque
-habitant morbi tristique senectus et. A condimentum vitae sapien pellentesque
-habitant. Proin sed libero enim sed. Auctor urna nunc id cursus metus aliquam
-eleifend mi. Purus in mollis nunc sed id semper risus. Quam viverra orci
-sagittis eu volutpat. Dictum sit amet justo donec enim diam vulputate ut.
-Convallis tellus id interdum velit laoreet. Placerat orci nulla pellentesque
-dignissim. Sit amet consectetur adipiscing elit pellentesque. Pharetra diam sit
-amet nisl. Sit amet venenatis urna cursus eget nunc scelerisque viverra.
-Viverra adipiscing at in tellus integer feugiat. Amet venenatis urna cursus
-eget nunc scelerisque viverra mauris in.
+Lorem ipsum dolor sit amet, consectetur
+adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna
+aliqua. Ultrices tincidunt arcu non sodales
+neque sodales ut etiam sit. A condimentum
+vitae sapien pellentesque habitant morbi
+tristique senectus et. A condimentum vitae
+sapien pellentesque habitant.
