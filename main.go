@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	UP    = 0
-	RIGHT = 1
-	DOWN  = 2
-	LEFT  = 3
+	UP = iota
+	RIGHT
+	DOWN
+	LEFT
 )
 
 func main() {
