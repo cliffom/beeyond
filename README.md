@@ -5,6 +5,9 @@ A classic adventure game for your terminal
 ## Getting Started
 
 ```sh
+# get dependencies
+$ make dep
+
 # start the game
 $ make run
 ```
