@@ -113,10 +113,13 @@ func (g *Game) HandleInput(k tcell.Key) {
 
 // NewGame initlizes a game given a screen to render on
 // and a world
-func NewGame(s tcell.Screen, w *World, o *GameOptions) *Game {
+func NewGame(s tcell.Screen, o *GameOptions) *Game {
+	w, h := s.Size()
+	world := NewWorld(w, h, o.Enemies)
+
 	return &Game{
 		Screen:  s,
-		World:   w,
+		World:   world,
 		Options: o,
 	}
 }
