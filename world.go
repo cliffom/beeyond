@@ -5,8 +5,9 @@ import "math/rand"
 // World represents our world as a 2-dimensional grid
 // and a user-controlled player
 type World struct {
-	Grid   [][]Entity
-	Player Player
+	Grid    [][]Entity
+	Enemies []*Enemy
+	Player  Player
 }
 
 // PlaceEntity places an entity on the world grid at
@@ -60,7 +61,7 @@ func (w *World) MovePlayer(d int) bool {
 // NewWorld initializes and returns a World. Responsible for
 // drawing the world border and placing the player in their
 // starting position
-func NewWorld(w, h int, p Player) *World {
+func NewWorld(w, h int, p Player, numEnemies int) *World {
 	grid := make([][]Entity, h)
 	for i := range grid {
 		grid[i] = make([]Entity, w)
@@ -71,8 +72,9 @@ func NewWorld(w, h int, p Player) *World {
 	grid[y][x] = p
 
 	world := &World{
-		Grid:   grid,
-		Player: p,
+		Grid:    grid,
+		Player:  p,
+		Enemies: make([]*Enemy, numEnemies),
 	}
 
 	// Initialize the borders of our world
@@ -91,17 +93,12 @@ func NewWorld(w, h int, p Player) *World {
 	}
 
 	// Put some enemies into our world
-	maxEnemies := 5
-	for {
+	for i := numEnemies - 1; i >= 0; i-- {
 		ex := rand.Intn(w)
 		ey := rand.Intn(h)
 		if *world.GetCellAt(ex, ey) == nil {
-			e := NewEnemy(ex, ey)
-			world.PlaceEntity(e)
-			maxEnemies--
-		}
-		if maxEnemies == 0 {
-			break
+			world.Enemies[i] = NewEnemy(ex, ey)
+			world.PlaceEntity(world.Enemies[i])
 		}
 	}
 
