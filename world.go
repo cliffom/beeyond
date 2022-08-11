@@ -95,16 +95,26 @@ func NewWorld(w, h int, p Player, o *GameOptions) *World {
 	}
 
 	// Put some enemies into our world
-	for i := o.Enemies - 1; i >= 0; i-- {
-		ex := rand.Intn(w)
-		ey := rand.Intn(h)
-		if *world.GetCellAt(ex, ey) == nil {
-			world.Enemies[i] = NewEnemy(ex, ey)
-			world.PlaceEntity(world.Enemies[i])
-		}
-	}
+	placeEnemies(w, h, o.Enemies, world)
 
 	return world
+}
+
+/*****************************************************************************
+ *                      Helper Functions for Enemies                         *
+ *****************************************************************************/
+
+func placeEnemies(w, h, n int, world *World) {
+	i := 0
+	for i < n {
+		x := rand.Intn(w)
+		y := rand.Intn(h)
+		if *world.GetCellAt(x, y) == nil {
+			world.Enemies[i] = NewEnemy(x, y)
+			world.PlaceEntity(world.Enemies[i])
+			i++
+		}
+	}
 }
 
 /*****************************************************************************
