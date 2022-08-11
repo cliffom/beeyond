@@ -26,8 +26,7 @@ func init() {
 func main() {
 	// Initialize a new tview form to get user options
 	options := &GameOptions{}
-	exit := getOptions(options)
-	if exit {
+	if exit := showWelcomeScreen(options); exit {
 		os.Exit(0)
 	}
 
@@ -53,8 +52,8 @@ func main() {
 	}
 }
 
-// getOptions draws a tcell.View to get game options
-func getOptions(options *GameOptions) (quit bool) {
+// showWelcomeScreen draws a tcell.View to get game options
+func showWelcomeScreen(options *GameOptions) (quit bool) {
 	app := tview.NewApplication()
 	optionsForm := tview.NewForm().
 		AddDropDown("Framerate", []string{"1", "15", "30", "60"}, 2, func(option string, optionIndex int) {
