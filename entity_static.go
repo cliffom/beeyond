@@ -40,3 +40,11 @@ func NewStatic(x, y int, r rune) *Static {
 		},
 	}
 }
+
+func NewStaticBorder(x, y int) *Static {
+	return NewStatic(x, y, border)
+}
+
+func NewStaticMountain(x, y int) *Static {
+	return NewStatic(x, y, mountain)
+}
