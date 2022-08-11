@@ -81,12 +81,12 @@ func NewWorld(w, h int, p Player, numEnemies int) *World {
 	for i := range world.Grid {
 		if i == 0 || i == len(world.Grid)-1 {
 			for k := range world.Grid[i] {
-				border := NewBorder(k, i)
+				border := NewStaticBorder(k, i)
 				world.PlaceEntity(border)
 			}
 		} else {
-			leftBorder := NewBorder(0, i)
-			rightBorder := NewBorder(len(world.Grid[i])-1, i)
+			leftBorder := NewStaticBorder(0, i)
+			rightBorder := NewStaticBorder(len(world.Grid[i])-1, i)
 			world.PlaceEntity(leftBorder)
 			world.PlaceEntity(rightBorder)
 		}
