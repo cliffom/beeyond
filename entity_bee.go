@@ -19,10 +19,8 @@ type Bee struct {
 // cell post-movement. If the cell-to-be-occupied has no occupying
 // entity, update the Bee's position based on movement vectors.
 func (b *Bee) Move() {
-	b.x += b.vx
-	b.y += b.vy
-	b.vx = 0
-	b.vy = 0
+	b.SetPosition(b.x+b.vx, b.y+b.vy)
+	b.SetVelocity(0, 0)
 }
 
 // UpdatePosition updates a Bee's velocity (vx, vy) and position (x, y)
