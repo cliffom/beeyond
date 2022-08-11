@@ -2,11 +2,6 @@ package main
 
 import "github.com/gdamore/tcell/v2"
 
-const (
-	mountain = '\u26F0' // ⛰
-	border   = '\u2588' // █
-)
-
 type Static struct {
 	Position
 	Sprite
@@ -42,9 +37,11 @@ func NewStatic(x, y int, r rune) *Static {
 }
 
 func NewStaticBorder(x, y int) *Static {
-	return NewStatic(x, y, border)
+	// █
+	return NewStatic(x, y, '\u2588')
 }
 
 func NewStaticMountain(x, y int) *Static {
-	return NewStatic(x, y, mountain)
+	// ⛰
+	return NewStatic(x, y, '\u26F0')
 }
