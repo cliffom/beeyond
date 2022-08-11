@@ -2,11 +2,6 @@ package main
 
 import "math/rand"
 
-const (
-	mountainRangeWidth  = 5
-	mountainRangeHeight = 5
-)
-
 // World represents our world as a 2-dimensional grid
 // and a user-controlled player
 type World struct {
@@ -117,21 +112,24 @@ func NewWorld(w, h int, p Player, o *GameOptions) *World {
  *****************************************************************************/
 
 func placeMountainRanges(w, h, n int, world *World) {
+	mtnRangeWidth := 5
+	mtnRangeHeight := 5
+
 	for i := 0; i < n; i++ {
-		x := rand.Intn(w-mountainRangeWidth-1) + 1
-		y := rand.Intn(h-mountainRangeHeight-1) + 1
-		placeMountainRange(x, y, world)
+		x := rand.Intn(w-mtnRangeWidth-1) + 1
+		y := rand.Intn(h-mtnRangeHeight-1) + 1
+		placeMountainRange(x, y, mtnRangeWidth, mtnRangeHeight, world)
 	}
 }
 
-func placeMountainRange(x, y int, w *World) {
-	grid := make([][]int, mountainRangeWidth)
+func placeMountainRange(x, y, w, h int, world *World) {
+	grid := make([][]int, w)
 	for i := range grid {
-		grid[i] = make([]int, mountainRangeHeight)
+		grid[i] = make([]int, h)
 		for j := range grid[i] {
 			if rand.Intn(6) < 3 {
 				mountain := NewStaticMountain(x+i, y+j)
-				w.PlaceEntity(mountain)
+				world.PlaceEntity(mountain)
 			}
 		}
 	}
