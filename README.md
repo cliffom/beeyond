@@ -14,4 +14,4 @@ $ make run
 
 ## Example Output
 
-[![asciicast](https://asciinema.org/a/513858.svg)](https://asciinema.org/a/513858)
+[![asciicast](https://asciinema.org/a/514106.svg)](https://asciinema.org/a/514106)
