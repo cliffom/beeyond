@@ -2,6 +2,11 @@ package main
 
 import "math/rand"
 
+const (
+	mountainRangeWidth  = 5
+	mountainRangeHeight = 5
+)
+
 // World represents our world as a 2-dimensional grid
 // and a user-controlled player
 type World struct {
@@ -61,7 +66,7 @@ func (w *World) MovePlayer(d int) bool {
 // NewWorld initializes and returns a World. Responsible for
 // drawing the world border and placing the player in their
 // starting position
-func NewWorld(w, h int, p Player, numEnemies int) *World {
+func NewWorld(w, h int, p Player, o *GameOptions) *World {
 	grid := make([][]Entity, h)
 	for i := range grid {
 		grid[i] = make([]Entity, w)
@@ -74,7 +79,13 @@ func NewWorld(w, h int, p Player, numEnemies int) *World {
 	world := &World{
 		Grid:    grid,
 		Player:  p,
-		Enemies: make([]*Enemy, numEnemies),
+		Enemies: make([]*Enemy, o.Enemies),
+	}
+
+	for i := 0; i < o.Mountains; i++ {
+		mx := rand.Intn(w-mountainRangeWidth-1) + 1
+		my := rand.Intn(h-mountainRangeHeight-1) + 1
+		placeMountainRange(mx, my, world)
 	}
 
 	// Initialize the borders of our world
@@ -93,7 +104,7 @@ func NewWorld(w, h int, p Player, numEnemies int) *World {
 	}
 
 	// Put some enemies into our world
-	for i := numEnemies - 1; i >= 0; i-- {
+	for i := o.Enemies - 1; i >= 0; i-- {
 		ex := rand.Intn(w)
 		ey := rand.Intn(h)
 		if *world.GetCellAt(ex, ey) == nil {
@@ -103,4 +114,17 @@ func NewWorld(w, h int, p Player, numEnemies int) *World {
 	}
 
 	return world
+}
+
+func placeMountainRange(x, y int, w *World) {
+	grid := make([][]int, mountainRangeWidth)
+	for i := range grid {
+		grid[i] = make([]int, mountainRangeHeight)
+		for j := range grid[i] {
+			if rand.Intn(6) < 3 {
+				mountain := NewStaticMountain(x+i, y+j)
+				w.PlaceEntity(mountain)
+			}
+		}
+	}
 }
