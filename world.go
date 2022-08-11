@@ -82,11 +82,7 @@ func NewWorld(w, h int, p Player, o *GameOptions) *World {
 		Enemies: make([]*Enemy, o.Enemies),
 	}
 
-	for i := 0; i < o.Mountains; i++ {
-		mx := rand.Intn(w-mountainRangeWidth-1) + 1
-		my := rand.Intn(h-mountainRangeHeight-1) + 1
-		placeMountainRange(mx, my, world)
-	}
+	placeMountainRanges(w, h, o.Mountains, world)
 
 	// Initialize the borders of our world
 	for i := range world.Grid {
@@ -114,6 +110,18 @@ func NewWorld(w, h int, p Player, o *GameOptions) *World {
 	}
 
 	return world
+}
+
+/*****************************************************************************
+ *                  Helper Functions for Mountain Ranges                     *
+ *****************************************************************************/
+
+func placeMountainRanges(w, h, n int, world *World) {
+	for i := 0; i < n; i++ {
+		x := rand.Intn(w-mountainRangeWidth-1) + 1
+		y := rand.Intn(h-mountainRangeHeight-1) + 1
+		placeMountainRange(x, y, world)
+	}
 }
 
 func placeMountainRange(x, y int, w *World) {
