@@ -19,9 +19,11 @@ const (
 	LEFT
 )
 
-func main() {
+func init() {
 	rand.Seed(time.Now().UnixNano())
+}
 
+func main() {
 	// Initialize a new tview form to get user options
 	options := &GameOptions{}
 	exit := getOptions(options)
