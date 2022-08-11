@@ -22,14 +22,14 @@ func (s *Static) GetVelocity() (vx, vy int) {
 	return 0, 0
 }
 
-func NewStatic(x, y int, r rune) *Static {
+func NewStatic(x, y int, r rune, c tcell.Color) *Static {
 	return &Static{
 		Position: Position{
 			x: x,
 			y: y,
 		},
 		Sprite: Sprite{
-			color:  tcell.ColorLightGrey,
+			color:  c,
 			frames: []rune{r},
 			frame:  0,
 		},
@@ -38,10 +38,10 @@ func NewStatic(x, y int, r rune) *Static {
 
 func NewStaticBorder(x, y int) *Static {
 	// █
-	return NewStatic(x, y, '\u2588')
+	return NewStatic(x, y, '\u2588', tcell.ColorLightGray)
 }
 
 func NewStaticMountain(x, y int) *Static {
-	// ⛰
-	return NewStatic(x, y, '\u26F0')
+	// ◭
+	return NewStatic(x, y, '\u25ED', tcell.ColorBeige)
 }
