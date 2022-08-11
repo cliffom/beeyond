@@ -61,57 +61,58 @@ func (w *World) MovePlayer(d int) bool {
 // NewWorld initializes and returns a World. Responsible for
 // drawing the world border and placing the player in their
 // starting position
-func NewWorld(w, h int, p Player, o *GameOptions) *World {
-	grid := make([][]Entity, h)
+func NewWorld(width, height int, p Player, o *GameOptions) *World {
+	grid := make([][]Entity, height)
 	for i := range grid {
-		grid[i] = make([]Entity, w)
+		grid[i] = make([]Entity, width)
 	}
 
-	// Place our player in the world
-	x, y := p.GetPosition()
-	grid[y][x] = p
-
-	world := &World{
+	w := &World{
 		Grid:    grid,
 		Player:  p,
 		Enemies: make([]*Enemy, o.Enemies),
 	}
 
-	placeMountainRanges(w, h, o.Mountains, world)
+	w.PlaceEntity(p)
+	placeBorders(w)
+	placeMountainRanges(width, height, o.Mountains, w)
+	placeEnemies(width, height, o.Enemies, w)
 
-	// Initialize the borders of our world
-	for i := range world.Grid {
-		if i == 0 || i == len(world.Grid)-1 {
-			for k := range world.Grid[i] {
+	return w
+}
+
+/*****************************************************************************
+ *                      Helper Functions for Borders                         *
+ *****************************************************************************/
+
+func placeBorders(w *World) {
+	for i := range w.Grid {
+		if i == 0 || i == len(w.Grid)-1 {
+			for k := range w.Grid[i] {
 				border := NewStaticBorder(k, i)
-				world.PlaceEntity(border)
+				w.PlaceEntity(border)
 			}
 		} else {
 			leftBorder := NewStaticBorder(0, i)
-			rightBorder := NewStaticBorder(len(world.Grid[i])-1, i)
-			world.PlaceEntity(leftBorder)
-			world.PlaceEntity(rightBorder)
+			rightBorder := NewStaticBorder(len(w.Grid[i])-1, i)
+			w.PlaceEntity(leftBorder)
+			w.PlaceEntity(rightBorder)
 		}
 	}
-
-	// Put some enemies into our world
-	placeEnemies(w, h, o.Enemies, world)
-
-	return world
 }
 
 /*****************************************************************************
  *                      Helper Functions for Enemies                         *
  *****************************************************************************/
 
-func placeEnemies(w, h, n int, world *World) {
+func placeEnemies(width, height, enemies int, w *World) {
 	i := 0
-	for i < n {
-		x := rand.Intn(w)
-		y := rand.Intn(h)
-		if *world.GetCellAt(x, y) == nil {
-			world.Enemies[i] = NewEnemy(x, y)
-			world.PlaceEntity(world.Enemies[i])
+	for i < enemies {
+		x := rand.Intn(width)
+		y := rand.Intn(height)
+		if *w.GetCellAt(x, y) == nil {
+			w.Enemies[i] = NewEnemy(x, y)
+			w.PlaceEntity(w.Enemies[i])
 			i++
 		}
 	}
@@ -121,25 +122,25 @@ func placeEnemies(w, h, n int, world *World) {
  *                  Helper Functions for Mountain Ranges                     *
  *****************************************************************************/
 
-func placeMountainRanges(w, h, n int, world *World) {
+func placeMountainRanges(width, height, ranges int, w *World) {
 	mtnRangeWidth := 5
 	mtnRangeHeight := 5
 
-	for i := 0; i < n; i++ {
-		x := rand.Intn(w-mtnRangeWidth-1) + 1
-		y := rand.Intn(h-mtnRangeHeight-1) + 1
-		placeMountainRange(x, y, mtnRangeWidth, mtnRangeHeight, world)
+	for i := 0; i < ranges; i++ {
+		x := rand.Intn(width-mtnRangeWidth-1) + 1
+		y := rand.Intn(height-mtnRangeHeight-1) + 1
+		placeMountain(x, y, mtnRangeWidth, mtnRangeHeight, w)
 	}
 }
 
-func placeMountainRange(x, y, w, h int, world *World) {
-	grid := make([][]int, w)
+func placeMountain(x, y, width, height int, w *World) {
+	grid := make([][]int, width)
 	for i := range grid {
-		grid[i] = make([]int, h)
+		grid[i] = make([]int, height)
 		for j := range grid[i] {
 			if rand.Intn(6) < 3 {
 				mountain := NewStaticMountain(x+i, y+j)
-				world.PlaceEntity(mountain)
+				w.PlaceEntity(mountain)
 			}
 		}
 	}
