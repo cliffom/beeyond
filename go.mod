@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/gdamore/tcell/v2 v2.5.2
+	github.com/google/uuid v1.3.0
 	github.com/rivo/tview v0.0.0-20220805210617-37ad0bb93703
 )
 
