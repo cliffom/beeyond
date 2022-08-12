@@ -10,6 +10,7 @@ var beeFrames = []rune{
 }
 
 type Bee struct {
+	Class
 	Position
 	Velocity
 	Sprite
@@ -49,6 +50,7 @@ func (b *Bee) UpdatePosition(d int, e Entity) bool {
 // NewBee returns a new Bee
 func NewBee(x, y int) *Bee {
 	return &Bee{
+		Class: NewPlayerClass(),
 		Position: Position{
 			x: x,
 			y: y,

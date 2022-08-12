@@ -3,6 +3,7 @@ package main
 import "github.com/gdamore/tcell/v2"
 
 type Static struct {
+	Class
 	Position
 	Sprite
 }
@@ -24,6 +25,7 @@ func (s *Static) GetVelocity() (vx, vy int) {
 
 func NewStatic(x, y int, r rune, c tcell.Color) *Static {
 	return &Static{
+		Class: NewStaticClass(),
 		Position: Position{
 			x: x,
 			y: y,

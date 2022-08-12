@@ -17,10 +17,24 @@ func (c *Class) GetCategory() (category string) {
 	return c.category
 }
 
-// NewEnemyClass returns a class of category enemy
-func NewEnemyClass() Class {
+func NewClass(category string) Class {
 	return Class{
 		id:       uuid.New(),
-		category: "enemy",
+		category: category,
 	}
+}
+
+// NewPlayerClass returns a class of category player
+func NewPlayerClass() Class {
+	return NewClass("player")
+}
+
+// NewEnemyClass returns a class of category enemy
+func NewEnemyClass() Class {
+	return NewClass("enemy")
+}
+
+// NewStaticClass returns a class of category static
+func NewStaticClass() Class {
+	return NewClass("static")
 }

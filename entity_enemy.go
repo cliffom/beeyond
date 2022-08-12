@@ -15,6 +15,7 @@ var enemyFrames = []rune{
 }
 
 type Enemy struct {
+	Class
 	Position
 	Velocity
 	Sprite
@@ -58,6 +59,7 @@ func NewEnemy(x, y int) *Enemy {
 	delay := time.Duration(rand.Intn(501)+250) * time.Millisecond
 	animationDelay := time.Duration(rand.Intn(250)+250) * time.Millisecond
 	return &Enemy{
+		Class: NewEnemyClass(),
 		Delay: Delay{
 			ticker: *time.NewTicker(delay),
 		},

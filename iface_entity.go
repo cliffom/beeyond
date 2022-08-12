@@ -1,8 +1,13 @@
 package main
 
-import "github.com/gdamore/tcell/v2"
+import (
+	"github.com/gdamore/tcell/v2"
+	"github.com/google/uuid"
+)
 
 type Entity interface {
+	GetID() uuid.UUID
+	GetCategory() string
 	Draw() rune
 	Move()
 	GetPosition() (x, y int)
