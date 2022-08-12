@@ -2,6 +2,12 @@ package main
 
 import "github.com/google/uuid"
 
+const (
+	CATEGORY_ENEMY  = "enemy"
+	CATEGORY_PLAYER = "player"
+	CATEGORY_STATIC = "static"
+)
+
 type Class struct {
 	id       uuid.UUID
 	category string
@@ -26,15 +32,15 @@ func NewClass(category string) Class {
 
 // NewPlayerClass returns a class of category player
 func NewPlayerClass() Class {
-	return NewClass("player")
+	return NewClass(CATEGORY_PLAYER)
 }
 
 // NewEnemyClass returns a class of category enemy
 func NewEnemyClass() Class {
-	return NewClass("enemy")
+	return NewClass(CATEGORY_ENEMY)
 }
 
 // NewStaticClass returns a class of category static
 func NewStaticClass() Class {
-	return NewClass("static")
+	return NewClass(CATEGORY_STATIC)
 }
