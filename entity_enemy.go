@@ -7,24 +7,32 @@ import (
 	"github.com/gdamore/tcell/v2"
 )
 
+var enemyFrames = []rune{
+	'\u25F4',
+	'\u25F5',
+	'\u25F6',
+	'\u25F7',
+}
+
 type Enemy struct {
 	Position
 	Velocity
 	Sprite
 	Delay
+	animationDelay Delay
 }
 
 // Draw returns the current animation frame but also increments
 // the frame for the next draw call
 func (e *Enemy) Draw() rune {
-	frame := e.frames[e.frame]
-
-	e.frame++
-	if e.frame > len(e.frames)-1 {
-		e.frame = 0
+	if e.animationDelay.Tick() {
+		e.frame++
+		if e.frame > len(e.frames)-1 {
+			e.frame = 0
+		}
 	}
 
-	return frame
+	return e.frames[e.frame]
 }
 
 // Move checks for an entity in what would be our Enemy's occupying
@@ -48,6 +56,7 @@ func (e *Enemy) HasVelocity() bool {
 // NewEnemy returns a new Enemy
 func NewEnemy(x, y int) *Enemy {
 	delay := time.Duration(rand.Intn(501)+250) * time.Millisecond
+	animationDelay := time.Duration(rand.Intn(250)+250) * time.Millisecond
 	return &Enemy{
 		Delay: Delay{
 			ticker: *time.NewTicker(delay),
@@ -61,33 +70,12 @@ func NewEnemy(x, y int) *Enemy {
 			vy: 0,
 		},
 		Sprite: Sprite{
-			frames: getEnemyFrames(),
+			frames: enemyFrames,
 			frame:  0,
 			color:  tcell.ColorRed,
 		},
+		animationDelay: Delay{
+			ticker: *time.NewTicker(animationDelay),
+		},
 	}
-}
-
-// getEnemyFrames is a helper function that adds frames of each animation
-// in order to slow down the perceived time between animation updates
-func getEnemyFrames() []rune {
-	enemyFrames := []rune{
-		'\u25F4',
-		'\u25F5',
-		'\u25F6',
-		'\u25F7',
-	}
-
-	numFramesPerState := rand.Intn(7) + 4
-	totalFrames := len(enemyFrames) * numFramesPerState
-
-	runes := make([]rune, totalFrames)
-
-	for i, v := range enemyFrames {
-		for j := numFramesPerState * i; j < numFramesPerState+(i*numFramesPerState); j++ {
-			runes[j] = v
-		}
-	}
-
-	return runes
 }
