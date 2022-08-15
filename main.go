@@ -56,18 +56,27 @@ func main() {
 func showWelcomeScreen(options *GameOptions) (quit bool) {
 	app := tview.NewApplication()
 	optionsForm := tview.NewForm().
-		AddDropDown("Framerate", []string{"1", "15", "30", "60"}, 2, func(option string, optionIndex int) {
-			fps, _ := strconv.ParseFloat(option, 32)
-			options.Framerate = float32(fps)
-		}).
-		AddDropDown("Enemies", []string{"1", "5", "10", "25"}, 1, func(option string, optionIndex int) {
-			e, _ := strconv.Atoi(option)
-			options.Enemies = e
-		}).
-		AddDropDown("Mountains", []string{"0", "5", "15", "45"}, 1, func(option string, optionIndex int) {
-			m, _ := strconv.Atoi(option)
-			options.Mountains = m
-		}).
+		AddDropDown("Framerate",
+			[]string{"15", "30", "60", "120"},
+			1,
+			func(option string, optionIndex int) {
+				fps, _ := strconv.ParseFloat(option, 32)
+				options.Framerate = float32(fps)
+			}).
+		AddDropDown("Enemies",
+			[]string{"1", "5", "10", "25"},
+			1,
+			func(option string, optionIndex int) {
+				e, _ := strconv.Atoi(option)
+				options.Enemies = e
+			}).
+		AddDropDown("Mountains",
+			[]string{"0", "5", "15", "45"},
+			1,
+			func(option string, optionIndex int) {
+				m, _ := strconv.Atoi(option)
+				options.Mountains = m
+			}).
 		AddButton("Start", func() {
 			app.Stop()
 		}).
